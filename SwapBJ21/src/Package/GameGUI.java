@@ -286,6 +286,10 @@ public class GameGUI extends javax.swing.JFrame {
             String st = null;
             if (this.jlabelCounterPlayer < 9) {
                 this.jlabelCounterPlayer++;
+                
+                if(jlabelCounterPlayer == 3)
+                    LuckyMe_Btn.setVisible(true);
+                
                 st = "pCardLabel" + Integer.toString(this.jlabelCounterPlayer);
                 Card dCard = gamy.deck.getDeck(0);
                 dCard.setSide(true);
@@ -395,6 +399,13 @@ public class GameGUI extends javax.swing.JFrame {
         this.HitB.setVisible(true);
         this.StandB.setVisible(true);
         this.DeckDeal.setVisible(false);
+        
+//        /**
+//         * Method to check luckyMe Function
+//         */
+//        if(jlabelCounterPlayer == 3){
+//        	this.LuckyMe_Btn.setVisible(true);
+//        }
 
         /* test of values
          System.out.println(gamy.dealerHand.toString());
