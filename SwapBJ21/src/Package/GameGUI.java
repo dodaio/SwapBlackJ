@@ -526,24 +526,24 @@ public class GameGUI extends javax.swing.JFrame {
 	            this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
 	            this.jlabelCounterDealer++;
 	        }
-	        while ((gamy.dealerHand.getSumOfCardValue() < 17) || (gamy.dealerHand.getSumOfCardValue() < gamy.playerHand.getSumOfCardValue())) {
-	            if (this.jlabelCounterDealer < 9) {
-	                st = "dCardLabel" + Integer.toString(this.jlabelCounterDealer);
-	                dCard = gamy.deck.getDeck(0);
-	                dCard.setSide(true);
-	                gamy.dealerHand.add(dCard);
-
-	                this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
-	                gamy.deck.remove(0);
-	                this.jlabelByName.get(st).setVisible(true);
-	                /* test of values after actions
-	                 
-	                System.out.println(gamy.deck.getDeck().size());
-	                 */
-
-	                this.jlabelCounterDealer++;
-	            }
-	        }
+	       
+//	            if (this.jlabelCounterDealer < 9) {
+//	                st = "dCardLabel" + Integer.toString(this.jlabelCounterDealer);
+//	                dCard = gamy.deck.getDeck(0);
+//	                dCard.setSide(true);
+//	                gamy.dealerHand.add(dCard);
+//
+//	                this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
+//	                gamy.deck.remove(0);
+//	                this.jlabelByName.get(st).setVisible(true);
+//	                /* test of values after actions
+//	                 
+//	                System.out.println(gamy.deck.getDeck().size());
+//	                 */
+//
+//	                this.jlabelCounterDealer++;
+//	            }
+	        
     }
     
     /**
