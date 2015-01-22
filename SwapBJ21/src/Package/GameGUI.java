@@ -482,7 +482,7 @@ public class GameGUI extends javax.swing.JFrame {
          */
         if(gamy.dealerHand.getSumOfCardValue() == 21)
         	{
-        		EndRound();
+        		OpenDealerCardAndEnd();
     			messageBox(false);
     			return;
         	}
@@ -493,7 +493,7 @@ public class GameGUI extends javax.swing.JFrame {
         for(Card currentCard : gamy.dealerHand.getHandList())
         	if((currentCard.getSuit() == 0) && (currentCard.getRank() == 12))
         	{
-        		EndRound();
+        		OpenDealerCardAndEnd();
         		messageBox(false);
             	return;
         	}
@@ -503,7 +503,7 @@ public class GameGUI extends javax.swing.JFrame {
          * Player Win by default if all the terms are checked
          */
         
-        EndRound();
+        OpenDealerCardAndEnd();
         messageBox(true);
         return;
             
@@ -512,9 +512,9 @@ public class GameGUI extends javax.swing.JFrame {
 
     
     /**
-     * Method that calls the game to end the round
+     * Method that calls the game to end the round and open dealer card
      */
-    private void EndRound(){
+    private void OpenDealerCardAndEnd(){
     	
     	this.disableClick();
         String st = null;
@@ -526,23 +526,6 @@ public class GameGUI extends javax.swing.JFrame {
 	            this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
 	            this.jlabelCounterDealer++;
 	        }
-	       
-//	            if (this.jlabelCounterDealer < 9) {
-//	                st = "dCardLabel" + Integer.toString(this.jlabelCounterDealer);
-//	                dCard = gamy.deck.getDeck(0);
-//	                dCard.setSide(true);
-//	                gamy.dealerHand.add(dCard);
-//
-//	                this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
-//	                gamy.deck.remove(0);
-//	                this.jlabelByName.get(st).setVisible(true);
-//	                /* test of values after actions
-//	                 
-//	                System.out.println(gamy.deck.getDeck().size());
-//	                 */
-//
-//	                this.jlabelCounterDealer++;
-//	            }
 	        
     }
     
