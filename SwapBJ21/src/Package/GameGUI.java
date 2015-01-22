@@ -482,6 +482,7 @@ public class GameGUI extends javax.swing.JFrame {
          */
         if(gamy.dealerHand.getSumOfCardValue() == 21)
         	{
+        		EndRound();
     			messageBox(false);
     			return;
         	}
@@ -492,6 +493,7 @@ public class GameGUI extends javax.swing.JFrame {
         for(Card currentCard : gamy.dealerHand.getHandList())
         	if((currentCard.getSuit() == 0) && (currentCard.getRank() == 12))
         	{
+        		EndRound();
         		messageBox(false);
             	return;
         	}
@@ -500,12 +502,50 @@ public class GameGUI extends javax.swing.JFrame {
         /**
          * Player Win by default if all the terms are checked
          */
+        
+        EndRound();
         messageBox(true);
         return;
             
         
     }                                           
 
+    
+    /**
+     * Method that calls the game to end the round
+     */
+    private void EndRound(){
+    	
+    	this.disableClick();
+        String st = null;
+        Card dCard = null;
+	        if (this.jlabelCounterDealer == 2) {
+	            st = "dCardLabel" + Integer.toString(this.jlabelCounterDealer);
+	            dCard = gamy.dealerHand.getLast();
+	            dCard.setSide(true);
+	            this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
+	            this.jlabelCounterDealer++;
+	        }
+	        while ((gamy.dealerHand.getSumOfCardValue() < 17) || (gamy.dealerHand.getSumOfCardValue() < gamy.playerHand.getSumOfCardValue())) {
+	            if (this.jlabelCounterDealer < 9) {
+	                st = "dCardLabel" + Integer.toString(this.jlabelCounterDealer);
+	                dCard = gamy.deck.getDeck(0);
+	                dCard.setSide(true);
+	                gamy.dealerHand.add(dCard);
+
+	                this.jlabelByName.get(st).setIcon(new javax.swing.ImageIcon(getClass().getResource(dCard.getCardFaceIcon())));
+	                gamy.deck.remove(0);
+	                this.jlabelByName.get(st).setVisible(true);
+	                /* test of values after actions
+	                 
+	                System.out.println(gamy.deck.getDeck().size());
+	                 */
+
+	                this.jlabelCounterDealer++;
+	            }
+	        }
+    }
+    
     /**
      *
      *   fileName
@@ -580,6 +620,7 @@ public class GameGUI extends javax.swing.JFrame {
     private void disableClick() {
         this.HitB.setVisible(false);
         this.StandB.setVisible(false);
+        LuckyMe_Btn.setVisible(false);
         this.deckIsEmpty();
 
     }
