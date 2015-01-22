@@ -10,15 +10,21 @@ import Classes.DealerHand;
 import Classes.Deck;
 import Classes.Game;
 import Classes.PlayerHand;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javafx.scene.effect.GaussianBlurBuilder;
+
 import javax.swing.JLabel;
 
 /**
@@ -264,6 +270,7 @@ public class GameGUI extends javax.swing.JFrame {
     }                                       
     private void DeckDealMouseReleased(java.awt.event.MouseEvent evt) {                                       
         gamy.setDeckDealCounter(gamy.getDeckDealCounter() + 1);
+        LuckyMe_Btn.setVisible(false);
         this.dealFunc();
         /* test of values after actions
          System.out.println(dCard1.toString()+"\n"+dCard2.toString()+"\n"+dCard3.toString()+"\n"+ dCard4.toString());
@@ -287,9 +294,6 @@ public class GameGUI extends javax.swing.JFrame {
             if (this.jlabelCounterPlayer < 9) {
                 this.jlabelCounterPlayer++;
                 
-                if(jlabelCounterPlayer == 3)
-                    LuckyMe_Btn.setVisible(true);
-                
                 st = "pCardLabel" + Integer.toString(this.jlabelCounterPlayer);
                 Card dCard = gamy.deck.getDeck(0);
                 dCard.setSide(true);
@@ -303,6 +307,18 @@ public class GameGUI extends javax.swing.JFrame {
                  */
             }
         }
+        
+        /**
+         * Check if Player has three or more cards of the same color
+         */
+        if(gamy.playerHand.getHandList().size() >= 3 && gamy.playerHand.getSumOfCardValue()<21){
+        	
+        	LuckyMe_Btn.setVisible(checkCardShape());  //switch on or off the button
+        	
+        }
+        	
+        
+        
         if (gamy.playerHand.getSumOfCardValue() > 21) {
             this.disableClick();
             this.winnerCheck();
@@ -314,13 +330,49 @@ public class GameGUI extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * 
      */
     private void deckIsEmpty() {
         if (gamy.deck.isEmpty()) {
             gamy.deck = new Deck();
         }
         gamy.deck.Suffle();
+    }
+    
+    /**
+     * This method check if the player has a hand of red/black color in a row
+     * @return true or false
+     */
+    private boolean checkCardShape(){
+    	
+    	boolean LuckybuttonOn = false;  // by default is false
+    	
+    	// 0 or 1 is spade & club - black -- 2 or 3 is diamond & heart - red
+    	
+    	switch (gamy.playerHand.getLast().getSuit()){ 		//getting player last hand for comparison to the rest of the deck
+        case 0:
+        case 1:															
+        	for(Card currentCard : gamy.playerHand.getHandList())			//while all the cards in his hand has the same color boolean value is ture and the button is shown on the GUI
+	       		 if(currentCard.getSuit() == 0 || currentCard.getSuit() == 1)
+	       			 LuckybuttonOn = true;
+	       		 else{
+	       			 LuckybuttonOn = false;    // if one card is different lucky me button is not displayed
+	       			 break;
+	       		 	}
+        	 break;
+        case 2:
+        case 3:
+        	for(Card currentCard : gamy.playerHand.getHandList())		
+          		 if(currentCard.getSuit() == 2 || currentCard.getSuit() == 3)	//while all the cards in his hand has the same color boolean value is ture and the button is shown on the GUI
+          			 LuckybuttonOn = true;
+          		 else{
+          			 LuckybuttonOn = false;		// if one card is different lucky me button is not displayed
+          			 break;
+          		 	}
+        	break;
+    	}
+    	
+    	return LuckybuttonOn;
     }
 
     /**
@@ -421,11 +473,37 @@ public class GameGUI extends javax.swing.JFrame {
     private void BackgroundMouseClicked(java.awt.event.MouseEvent evt) {                                        
 
         // TODO add your handling code here:
-        //luckme();
     }                                       
 
     private void LuckyMe_BtnActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
+        
+        /**
+         * If the lucky me button is pressed & the dealer has 21 then he win, going to method that finish the game and check and announce that he won
+         */
+        if(gamy.dealerHand.getSumOfCardValue() == 21)
+        	{
+    			messageBox(false);
+    			return;
+        	}
+        
+        /**
+         * If the lucky me button is pressed and the dealer got a Queen Spade then he won
+         */
+        for(Card currentCard : gamy.dealerHand.getHandList())
+        	if((currentCard.getSuit() == 0) && (currentCard.getRank() == 12))
+        	{
+        		messageBox(false);
+            	return;
+        	}
+        
+        
+        /**
+         * Player Win by default if all the terms are checked
+         */
+        messageBox(true);
+        return;
+            
+        
     }                                           
 
     /**
